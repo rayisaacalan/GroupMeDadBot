@@ -19,6 +19,7 @@ GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
 GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
 GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
 GROUPME_HOWDYBOT_ID = os.getenv('GROUPME_HOWDYBOT_ID')
+GROUPME_MARKBANBOT_ID = os.getenv('GROUPME_MARKBANBOT_ID')
 TOKEN = os.getenv('GM_TOKEN')
 
 #creating a reddit instance
@@ -43,6 +44,11 @@ def getUserID(item, username):
 		if (person['nickname'] == username):
 			return person['user_id']
 
+def getMemID(item, username):
+	for person in item['members']:
+		if (person['nickname'] == username):
+			return person['id']
+		
 # Classes for bots:
 
 class Bot:
@@ -157,6 +163,22 @@ class MockBot(Bot):
 					msg = msg+msgOrig[index].upper()
 			self.SendMessage(msg)
 		
+		
+class RandBanBot:
+	def __init__(self, BOT_ID, name, nameToBan):
+		super().__init__(BOT_ID, name)
+		self.nameToBan = nameToBan
+	def Ban(self, data, memID):
+		if data['name'] == self.nameToBan:
+			msg = ''
+			banChance = random.randint(0,6)
+			if (!banChance):
+				msg = "That comment was not very cash money of you."
+				self.SendMessage(msg)
+				remove(memID)
+				
+
+
 class EchoBot(Bot):
 	def __init__(self, BOT_ID, name):
 		super().__init__(BOT_ID, name)
@@ -257,6 +279,22 @@ def colbyMockBotFunc():
 
 	return "ok", 200
 
+markBanBot = BanBot(GROUPME_MARKBANBOT_ID, 'Cash Money Dino', 'Mark')
+@app.route('/markbanbot', methods=['POST']
+def markBanBotFunc():
+	   gm_id = data['group_id']
+	   gm_info = getGMData(gm_id)
+	   markBanBot.isActive = True
+	   data = request.get_json()
+	   if markBanBot.name in data['name']
+	   	return "ok", 200
+	   	markBanBot.Ban(data, getMemID(gm_info, data['name']))
+	   msg = data['text']
+	   if "@BanMarkBot toggle" in msg:
+	   	markBanBot.Toggle()
+	   if not markBanBot.isActive:
+	   	return "ok", 200
+	   return "ok", 200
 
 famDadBot = DadBot(GROUPME_FAM_DAD_ID, 'DadBot')
 @app.route('/nerdvalley', methods=['POST'])
