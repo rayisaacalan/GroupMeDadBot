@@ -172,7 +172,7 @@ class RandBanBot:
 		if data['name'] == self.nameToBan:
 			msg = ''
 			banChance = random.randint(0,6)
-			if (!banChance):
+			if (not banChance):
 				msg = "That comment was not very cash money of you."
 				self.SendMessage(msg)
 				remove(memID)
@@ -282,18 +282,18 @@ def colbyMockBotFunc():
 markBanBot = BanBot(GROUPME_MARKBANBOT_ID, 'Cash Money Dino', 'Mark')
 @app.route('/markbanbot', methods=['POST']
 def markBanBotFunc():
+	   if not markBanBot.isActive:
+	   	return "ok", 200
+	   data = request.get_json()
 	   gm_id = data['group_id']
 	   gm_info = getGMData(gm_id)
 	   markBanBot.isActive = True
-	   data = request.get_json()
 	   if markBanBot.name in data['name']
 	   	return "ok", 200
 	   	markBanBot.Ban(data, getMemID(gm_info, data['name']))
 	   msg = data['text']
 	   if "@BanMarkBot toggle" in msg:
 	   	markBanBot.Toggle()
-	   if not markBanBot.isActive:
-	   	return "ok", 200
 	   return "ok", 200
 
 famDadBot = DadBot(GROUPME_FAM_DAD_ID, 'DadBot')
