@@ -280,7 +280,7 @@ def colbyMockBotFunc():
 	return "ok", 200
 
 markBanBot = BanBot(GROUPME_MARKBANBOT_ID, 'Cash Money Dino', 'Mark')
-@app.route('/markbanbot', methods=['POST']
+@app.route('/markbanbot', methods=['POST'])
 def markBanBotFunc():
 	if not markBanBot.isActive:
 		return "ok", 200
