@@ -288,7 +288,7 @@ def markBanBotFunc():
 	gm_id = data['group_id']
 	gm_info = getGMData(gm_id)
 	markBanBot.isActive = True
-	if markBanBot.name in data['name']
+	if markBanBot.name in data['name']:
 		return "ok", 200
  	markBanBot.Ban(data, getMemID(gm_info, data['name']))
 	msg = data['text']
