@@ -2,7 +2,7 @@ from flask import Flask, request
 import os
 import json
 import random
-import praw
+#import praw
 import pickle
 import urllib
 import groupy
@@ -15,16 +15,17 @@ app = Flask(__name__)
 
 #set the bot id's of each bot from environment variables:
 
-GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
-GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
-GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
-GROUPME_HOWDYBOT_ID = os.getenv('GROUPME_HOWDYBOT_ID')
+#GROUPME_DADBOT_ID = os.getenv('GROUPME_DADBOT_ID')
+#GROUPME_COLBYBOT_ID = os.getenv('GROUPME_COLBYBOT_ID')
+#GROUPME_FAM_DAD_ID = os.getenv('GROUPME_FAM_DAD_ID')
+#GROUPME_HOWDYBOT_ID = os.getenv('GROUPME_HOWDYBOT_ID')
+
 GROUPME_MARKBANBOT_ID = os.getenv('GROUPME_MARKBANBOT_ID')
 TOKEN = os.getenv('GM_TOKEN')
 
 #creating a reddit instance
 
-reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
+#reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
 
 GMClient = Client.from_token(TOKEN)
 
@@ -136,7 +137,7 @@ class DadBot(Bot):
 		    msgSend = "Hi " + name + ", I'm Dad."
 		if msgSend != "":	
 			self.SendMessage(msgSend)
-
+"""
 	def SendDadJokeFromReddit(self): # picks a random hot post from r/dadjokes
 		submissions = list(reddit.subreddit('dadjokes').hot(limit=150))
 		submission = random.choice(submissions)
@@ -146,6 +147,7 @@ class DadBot(Bot):
 			msg = msg+"."
 		msg = msg+ " " +submission.selftext
 		self.SendMessage(msg)
+"""
 
 class MockBot(Bot):
 	def __init__(self, BOT_ID, name, nameToMock):
@@ -164,7 +166,7 @@ class MockBot(Bot):
 			self.SendMessage(msg)
 		
 		
-class RandBanBot:
+class RandBanBot(Bot):
 	def __init__(self, BOT_ID, name, nameToBan):
 		super().__init__(BOT_ID, name)
 		self.nameToBan = nameToBan
@@ -175,7 +177,7 @@ class RandBanBot:
 			if (not banChance):
 				msg = "That comment was not very cash money of you."
 				self.SendMessage(msg)
-				remove(memID)
+				data[''].remove(memID)
 				
 
 
@@ -183,7 +185,7 @@ class EchoBot(Bot):
 	def __init__(self, BOT_ID, name):
 		super().__init__(BOT_ID, name)
 
-	def EchoMsg(data):
+	def EchoMsg(self, data):
 		if data['name'] != 'Mock Bot':
 			msg = '{} sent "{}".'.format(data['name'], data['text'])
 			self.SendMessage(msg)
@@ -207,7 +209,7 @@ class IntroBot(Bot):
 def rootPage():
 	return "GroupMe bots code located at 'github.com/kevinkuriachan/GroupMeDadBot'"
 
-introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
+"""introBot = IntroBot(GROUPME_HOWDYBOT_ID, 'HowdyBot')
 @app.route('/LFjoin', methods=['POST'])
 def introFunc():
 	data = request.get_json()
@@ -278,8 +280,9 @@ def colbyMockBotFunc():
 	colbyMockBot.Mock(data)
 
 	return "ok", 200
+"""
 
-markBanBot = BanBot(GROUPME_MARKBANBOT_ID, 'Cash Money Dino', 'Mark')
+markBanBot = RandBanBot(GROUPME_MARKBANBOT_ID, 'Cash Money Dino', 'Mark')
 @app.route('/markbanbot', methods=['POST'])
 def markBanBotFunc():
 	if not markBanBot.isActive:
@@ -287,6 +290,7 @@ def markBanBotFunc():
 	data = request.get_json()
 	gm_id = data['group_id']
 	gm_info = getGMData(gm_id)
+	msg = data['text']
 	markBanBot.isActive = True
 	if markBanBot.name in data['name']:
 		markBanBot.Ban(data, getMemID(gm_info, data['name']))
@@ -294,7 +298,7 @@ def markBanBotFunc():
 	if "@BanMarkBot toggle" in msg:
 		markBanBot.Toggle()
 	return "ok", 200
-
+"""
 famDadBot = DadBot(GROUPME_FAM_DAD_ID, 'DadBot')
 @app.route('/nerdvalley', methods=['POST'])
 def nerdValley():
@@ -306,3 +310,4 @@ def nerdValley():
 		famDadBot.SendDadJokeFromReddit()
 
 	return "ok", 200
+"""
