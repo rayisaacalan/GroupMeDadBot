@@ -289,9 +289,8 @@ def markBanBotFunc():
 	gm_info = getGMData(gm_id)
 	markBanBot.isActive = True
 	if markBanBot.name in data['name']:
+		markBanBot.Ban(data, getMemID(gm_info, data['name']))
 		return "ok", 200
- 	markBanBot.Ban(data, getMemID(gm_info, data['name']))
-	msg = data['text']
 	if "@BanMarkBot toggle" in msg:
 		markBanBot.Toggle()
 	return "ok", 200
