@@ -178,8 +178,8 @@ class RandBanBot(Bot):
 				msg = "That comment was not very cash money of you."
 				self.SendMessage(msg)
 				data[''].remove(memID)
-				
-
+	def Debug(self, data):
+		self.SendMessage(data)
 
 class EchoBot(Bot):
 	def __init__(self, BOT_ID, name):
@@ -291,9 +291,7 @@ def markBanBotFunc():
 	gm_id = data['group_id']
 	gm_info = getGMData(gm_id)
 	msg = data['text']
-
-	print(data)
-	
+	markBanBot.Debug(data)
 	markBanBot.isActive = True
 	if markBanBot.name in data['name']:
 		markBanBot.Ban(data, getMemID(gm_info, data['name']))
