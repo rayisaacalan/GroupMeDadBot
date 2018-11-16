@@ -30,7 +30,7 @@ TOKEN = os.getenv('GM_TOKEN')
 GMClient = Client.from_token(TOKEN)
 #----------------------------------
 #Trying more debugging stuff
-groups = list(client.groups.list_all())
+groups = list(GMClient.groups.list_all())
 for group in groups:
 	print(group.name, True)
 group = groups[0]
