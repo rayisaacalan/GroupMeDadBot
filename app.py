@@ -32,10 +32,10 @@ GMClient = Client.from_token(TOKEN)
 #Trying more debugging stuff
 groups = list(GMClient.groups.list_all())
 for group in groups:
-	print(group.name, True)
+	print(group.name)
 group = groups[0]
 for member in group.members:
-	print(member.nickname, True)
+	print(member.nickname)
 #----------------------------------
 
 
@@ -58,7 +58,15 @@ def getMemID(item, username):
 	for person in item['members']:
 		if (person['nickname'] == username):
 			return person['id']
-		
+#-------------------------	
+#More debugging
+data = request.get_json()
+gm_id = data[GROUPME_MARKBANBOT_ID]
+gm_info = getGMData(gm_id)
+print(data)
+print(gm_id)
+print(gm_info)
+#-------------------------
 # Classes for bots:
 
 class Bot:
