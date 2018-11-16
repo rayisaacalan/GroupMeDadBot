@@ -28,6 +28,15 @@ TOKEN = os.getenv('GM_TOKEN')
 #reddit = praw.Reddit(client_id = os.getenv('redditID'), client_secret = os.getenv('redditSecret'), user_agent = 'my user agent')
 
 GMClient = Client.from_token(TOKEN)
+#----------------------------------
+#Trying more debugging stuff
+groups = list(client.groups.list_all())
+for group in groups:
+	print(group.name, True)
+group = groups[0]
+for member in group.members:
+	print(member.nickname, True)
+#----------------------------------
 
 
 def getGMData(gm_id):
